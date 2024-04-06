@@ -7,6 +7,7 @@ export default function Navbar() {
             Knovel Knights
         </Link>
         <u1>
+            <BoldenLink to="books">Books</BoldenLink>
             <BoldenLink to="leaderboard">Leaderboard</BoldenLink>
             <BoldenLink to="events">Events</BoldenLink>
         </u1>
