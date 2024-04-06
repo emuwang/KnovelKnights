@@ -13,9 +13,7 @@ export default function Board() {
             <h1 className="Leaderboard">Leaderboard</h1>
 
             <div className="Duration">
-                <button onClick={handleClick} data-id='7'>7 Days</button>
-                <button onClick={handleClick} data-id= '30'>30 Days</button>
-                <button onClick={handleClick} data-id='0'>All-Time</button>
+                <h2>All-Time</h2>
             </div>
             <Profiles></Profiles>
         </div>
