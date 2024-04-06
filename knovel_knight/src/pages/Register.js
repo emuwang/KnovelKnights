@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import axios from '../api/axios';
 
 /**
  *  Check that username:
@@ -18,6 +19,7 @@ const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
  *  5. Is between length 8-24
  */ 
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+const REGISTER_URL = '/register';
 
 const Register = () => {
     const userRef = useRef();                               // Set focus on userRef when it loads
@@ -65,12 +67,56 @@ const Register = () => {
         setErrMsg('');                                      // Clear out error msg since it has been read                     
     }, [user, pwd, matchPwd])                               // Will check if any of these 3 fields change 
                                                             // (Eg. updating password due to missing special char)
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const v1 = USER_REGEX.test(user);
+        const v2 = PWD_REGEX.test(pwd);
+
+        if (!v1 || !v2) {                                   // Second layer of error checking for security
+            setErrMsg("Invalid Entry");
+            return;
+        }
+        try {
+            // Since we have an async function, we can use await
+            const response = await axios.post(REGISTER_URL,
+                JSON.stringify({ user: user, pwd: pwd }),
+                {
+                    headers: { 'Content-Type': 'application/json',
+                    withCredentials: true
+                }
+                })
+                setSuccess(true);
+
+                // clear input fields
+                setUser('');
+                setPwd('');
+                setMatchPwd('');
+        } catch (e) {
+            if (!e?.response) {
+                setErrMsg('No Server Response');
+            } else if (errMsg.response.status === 409) {
+              setErrMsg('Username Taken');  
+            } else {
+                setErrMsg('Registration Failed');
+            }
+            errRef.current.focus();
+        }
+    }
 
     return(
+        <>
+            { success ? (
+                <section>
+                    <h1>Success!</h1>
+                    <p>
+                        <a href="#">Sign In</a>
+                    </p>
+                </section>
+        ): (
         <section>
             <p ref={errRef} className={errMsg ? "errmsg": "offscreen"} aria-live="assertive">{errMsg}</p>   {/* If error message exists, else it is positioned offscreen (Can change to none) */}
         <h1>Register</h1>
-        <form>
+        <form onSubmit={handleSubmit}>
             <label htmlFor="username">                                                                      {/* id of username input */}
             
             Username:
@@ -172,10 +218,21 @@ const Register = () => {
             <p id="confirmnote" className={matchFocus && !validMatch ? "instructions" : "offscreen"}>
                 <FontAwesomeIcon icon={faInfoCircle} />
                 Passwords do not match.
-            </p>                      
+            </p>  
+            <button disabled={!validName || !validPwd || !validMatch ? true : false}>
+                Sign Up
+            </button>                    
         </form>
+        <p>
+            Already registered? <br/>
+            <span className="line">
+                <a href="#">Sign In</a>
+            </span>
+        </p>
         </section>
+    )}
+    </>
     )
 }
 
-export default Register
+export default Register;

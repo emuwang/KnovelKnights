@@ -6,6 +6,14 @@ body {
   margin: 0;
 }
 
+.table {
+  margin-left: auto;
+  margin-right: auto;
+  margin: auto;
+  text-align: center;
+  align-self: "center";
+}
+
 .container {
   margin: 1rem;
   text-align: center;
@@ -45,4 +53,41 @@ body {
 }
 .nav li:hover {
 color: #dca023;
+}
+
+.login {
+  position: absolute;
+  top: 50px;
+  right: 3px;
+  padding: 10px 20px;
+  background-color: #153b8c; /* Button background color */
+  color: #fff; /* Text color */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.register {
+  position: absolute;
+  top: 90px;
+  right: 3px;
+  padding: 10px 11px;
+  background-color: #153b8c; /* Button background color */
+  color: #fff; /* Text color */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.register a {
+  color: inherit;
+  text-decoration: none;
+  align-items: center;
+}
+.login:hover {
+  color: #dca023; /* Button background color on hover */
+}
+
+.register:hover {
+  color: #dca023; /* Button background color on hover */
 }
