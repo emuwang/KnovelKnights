@@ -1,5 +1,6 @@
 * {
   box-sizing: border-box;
+  margin: 0;
 }
 
 body {
@@ -19,13 +20,16 @@ body {
   text-align: center;
 }
 .nav {
+  float: top;
   background-color: #0c214d;
   color: white;
   display: flex;
   justify-content: space-between;
   align-items: stretch;
   gap: 2rem;
-  padding: 0 1rem;  
+  padding: 0 1rem;
+  margin-top: 0;
+  border: 0 0;
 }
 
 .site-title {
@@ -57,7 +61,7 @@ color: #dca023;
 
 .login {
   position: absolute;
-  top: 50px;
+  top: 395px;
   right: 3px;
   padding: 10px 20px;
   background-color: #153b8c; /* Button background color */
@@ -69,7 +73,7 @@ color: #dca023;
 
 .register {
   position: absolute;
-  top: 90px;
+  top: 345px;
   right: 3px;
   padding: 10px 11px;
   background-color: #153b8c; /* Button background color */
@@ -90,4 +94,82 @@ color: #dca023;
 
 .register:hover {
   color: #dca023; /* Button background color on hover */
+}
+
+.banner {
+  margin: 0;
+  border: 0 0;
+  padding: 0;
+  display: grid;
+  height: 100%;
+  margin-bottom: 0;
+
+  --banner-bottom: 70%;
+  margin-bottom: calc(25px - var(--banner-width));
+  float: top;
+}
+
+.center-fit {
+  max-width: 100%;
+  max-height: 100vh;
+  margin: auto;
+}
+
+.article1 u1{
+  list-style: none;
+}
+.article2 u1{
+  list-style: none;
+}
+
+.reviewNames li:hover {
+  color: #ffffff;
+}
+
+.reviewNames a{
+  color: #000000;
+  text-decoration: none;
+}
+
+.reviewNames a:hover {
+  color: #ffffff;
+}
+.article1 {
+  float: left;
+  width: 50%;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: #153b8c;
+}
+
+.article2 {
+  float: right;
+  padding: 20px;
+  width: 50%;
+  box-sizing: border-box;
+  background-color: #153b8c;
+}
+
+.ArticleThing {
+  font-size: 3rem;
+}
+
+.review {
+  font-size: 10000000rem;
+  color:#153b8c;
+}
+
+.Review h1 {
+  font-size: 4rem;
+  color: #153b8c;
+}
+.Review p {
+  margin-left: auto;
+  margin-right: auto;
+  margin: auto;
+  text-align: center;
+  align-self: "center";
+  width: 50%;
+  font-size: 2rem;
+  color: #153b8c;
 }
