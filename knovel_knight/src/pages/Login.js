@@ -1,8 +1,9 @@
 import { useRef, useState, useEffect, useContext} from 'react';
-import AuthContext from "./context/AuthProvider" ;
+import AuthContext from "../context/AuthProvider" ;
 import Register from './Register';
 
-import axios from './api/axios';
+import { Link } from 'react-router-dom';
+import axios from '../api/axios';
 const LOGIN_URL = '/auth';
 
 const Login = () => {
@@ -12,7 +13,7 @@ const Login = () => {
 
     const [user, setUser] = useState('');
     const [pwd, setPwd] = useState('');
-    const [errMsg, setErrMsg] = useState('');s
+    const [errMsg, setErrMsg] = useState('');
     const [success, setSuccess] = useState('');
     
     //sets focus on first input
