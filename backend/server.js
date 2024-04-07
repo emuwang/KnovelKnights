@@ -63,28 +63,7 @@ app.post('/userauth', (req, res) => {
             });
         }
     })
-    // var randstr = crypto.randomBytes(64).toString('hex');
-    // var pswd;
-    // console.log(randstr);
-    // crypto.pbkdf2(req.body.pwd, randstr, 10, 4, 
-    //       'sha256', (err, pswd) => { 
-    //         if (err)  
-    //         { 
-    //             console.log(err); 
-    //         }  
-    //         else
-    //         { 
-                        
-    //         // Prints derivedKey without encoding 
-    //         console.log(pswd);
-    //         console.log(pswd.toString('hex')); 
-    //         const hashpswd = pswd.toString('hex');
-    //         db.query("INSERT INTO users (username, pswd, salt) VALUE ('" + username + "', '" + hashpswd + "', '" + randstr + "');")
-    //         res.send("Added user to database.");
-    //         } 
-    //     }); 
 })
-
 
 app.post('/insertuser', (req, res) => {
     console.log("received user %s", req.body.user);
