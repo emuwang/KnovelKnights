@@ -48,20 +48,13 @@ const Register = () => {
 
     // Validate the username, depends on having valid name now
     useEffect(() => {
-        const result = USER_REGEX.test(user);               // Result for logging
-        console.log(result);
-        console.log(user);
-        setValidName(result);                           
+        setValidName(USER_REGEX.test(user));                           
     }, [user])
 
     // Validate the password (format + matching)
     useEffect(() => {
-        const result = PWD_REGEX.test(pwd);                 // Result for logging
-        console.log(result);
-        console.log(pwd);
-        setValidPwd(result);   
-        const match = pwd === matchPwd;                   
-        setValidMatch(match);                        
+        setValidPwd(PWD_REGEX.test(pwd));                   
+        setValidMatch(pwd === matchPwd);                        
     }, [pwd, matchPwd])                                     // If either of these changes, pwd stuff will update
     
     useEffect(() => {
@@ -78,7 +71,6 @@ const Register = () => {
             return;
         }
         try {
-            // Since we have an async function, we can use await
             const userData = { user: user, pwd: pwd};
 
             axios
@@ -87,33 +79,11 @@ const Register = () => {
             .catch(err=> {
                 console.error(err);
             });
-
-            // indian guy code that doesnt work
-            // const result = await fetch('http://localhost:3001/insertuser', {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json'
-            //     },
-            //     body: JSON.stringify(userData)
-            // })
-            // const resJson = await result.json()
-            // console.log(resJson)
-            
-            /*
-            original code i think?
-            const response = await axios.post(REGISTER_URL,
-                JSON.stringify({ user: user, pwd: pwd }),
-                {
-                    headers: { 'Content-Type': 'application/application.json',
-                    withCredentials: true
-                }
-                })
-                */
-                setSuccess(true);
-                // clear input fields
-                setUser('');
-                setPwd('');
-                setMatchPwd('');
+            setSuccess(true);
+            // clear input fields
+            setUser('');
+            setPwd('');
+            setMatchPwd('');
         } catch (e) {
             if (!e?.response) {
                 setErrMsg('No Server Response');

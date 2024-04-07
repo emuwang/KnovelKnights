@@ -7,19 +7,24 @@ import axios from '../api/axios';
 const LOGIN_URL = '/auth';
 
 const Login = () => {
-    const { setAuth } = useContext(AuthContext);
     const userRef = useRef();// Set focus on userRef when it loads
     const errRef = useRef();// Focus on error to be announced
 
     const [user, setUser] = useState('');
     const [pwd, setPwd] = useState('');
     const [errMsg, setErrMsg] = useState('');
+    const [auth, setAuth] = useState('');
     const [success, setSuccess] = useState('');
     
     //sets focus on first input
     useEffect(() => {
         userRef.current.focus();
     }, []) 
+
+    useEffect(() => {
+        setAuth(false);
+    }, [auth])
+
     //empty error message if inputs are changed
     useEffect(() => {
         setErrMsg('');
@@ -29,27 +34,31 @@ const Login = () => {
         e.preventDefault();
 
         try {
-            const response = await axios.post(LOGIN_URL,
-                JSON.stringify({user, pwd}),
-                {
-                    headers: { 'Context-Type': 'application/json'},
-                    withCredentials: true
-                }
-            );
-            console.log(JSON.stringify(response?.data));
+            const userData = { user: user, pwd: pwd };
+
+            const response = axios
+            .post('http://localhost:3001/userauth', userData)  
+            .then(response=> {
+                console.log("response: %s", response.data)
+                if (response.data.localeCompare("User does not exist") == 0)
+                    setErrMsg(response.data);
+                else if (response.data.localeCompare("Incorrect password") == 0)
+                    setErrMsg(response.data);
+                else if (response.data.localeCompare("Good to go") == 0)
+                    setSuccess(true);
+            })
+            .catch(e=> {
+                console.error(e);
+            });
             
-            const accessToken = response?.data?.accessToken;
-            const roles = response?.data.roles;
-            setAuth({user, pwd, roles, accessToken});
             setUser('');
             setPwd('');
-            setSuccess(true);
-        } catch (err) {
-            if (!err?.response) {
+        } catch (e) {
+            if (!e?.response) {
                 setErrMsg('No Server Response');
-            } else if (err.response?.status === 400) {
+            } else if (e.response?.status === 400) {
                 setErrMsg('Missing Username or Password');
-            } else if (err.response?.status === 401) {
+            } else if (e.response?.status === 401) {
                 setErrMsg('Unauthorized');
             } else {
                 setErrMsg('Login Failed');
@@ -65,7 +74,7 @@ const Login = () => {
                     <h1>You are logged in</h1>
                     <br />
                     <p>
-                        <Link to="/home">Go To Home</Link>
+                        <Link to="/">Go To Home</Link>
                     </p>
                 </section>
             ) : (
