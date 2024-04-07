@@ -7,6 +7,8 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 
+var auth_status = false;
+
 const db = mysql.createConnection({
     host: "localhost",
     user: "root",
@@ -30,7 +32,6 @@ app.get('/books', (req, res)=> {
 app.post('/userauth', (req, res) => {
     console.log("received user %s", req.body.user);
     const username = req.body.user;
-    var pswd;
     
     const searchsql = "SELECT * FROM users WHERE `username` = '" + username + "';"
     db.query(searchsql, (err, data)=> {
@@ -52,6 +53,7 @@ app.post('/userauth', (req, res) => {
                     const userhashpswd = userpswd.toString('hex');
                     console.log("cmp retval: %d", userhashpswd.localeCompare(data[0].pswd))
                     if (userhashpswd.localeCompare(data[0].pswd) == 0) {
+                        auth_status = true;
                         res.send("Good to go")
                     } else {
                         res.send("Incorrect password")
@@ -107,6 +109,10 @@ app.post('/insertuser', (req, res) => {
             res.send("Added user to database.");
             } 
         }); 
+})
+
+app.get('/authstatus', (req, res) => {
+    res.send(auth_status);
 })
 
 app.listen(3001, ()=> {
