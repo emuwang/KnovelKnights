@@ -19,7 +19,7 @@ const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
  *  5. Is between length 8-24
  */ 
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-const REGISTER_URL = '/register';
+const REGISTER_URL = '/insertuser';
 
 const Register = () => {
     const userRef = useRef();                               // Set focus on userRef when it loads
@@ -78,15 +78,37 @@ const Register = () => {
         }
         try {
             // Since we have an async function, we can use await
+            const userData = { user: user, pwd: pwd};
+
+            axios
+            .post('http://localhost:3001/insertuser', userData)
+            .then(()=> console.log(userData))
+            .catch(err=> {
+                console.error(err);
+            });
+
+            // indian guy code that doesnt work
+            // const result = await fetch('http://localhost:3001/insertuser', {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json'
+            //     },
+            //     body: JSON.stringify(userData)
+            // })
+            // const resJson = await result.json()
+            // console.log(resJson)
+            
+            /*
+            original code i think?
             const response = await axios.post(REGISTER_URL,
                 JSON.stringify({ user: user, pwd: pwd }),
                 {
-                    headers: { 'Content-Type': 'application/json',
+                    headers: { 'Content-Type': 'application/application.json',
                     withCredentials: true
                 }
                 })
+                */
                 setSuccess(true);
-
                 // clear input fields
                 setUser('');
                 setPwd('');

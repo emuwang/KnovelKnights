@@ -10,7 +10,8 @@ CREATE TABLE books (
 
 CREATE TABLE users (
 	username VARCHAR(128),
-    pswd VARCHAR(128)
+    pswd VARCHAR(8),
+    salt VARCHAR(128)
 );
 
 INSERT INTO books (title, author, rating)
@@ -30,13 +31,13 @@ VALUES
 
 ALTER TABLE books ORDER BY rating DESC;
 
-INSERT INTO users (username, pswd)
+INSERT INTO users (username, pswd, salt)
 VALUES
-('user1', 'password1'),
-('user2', 'password2'),
-('user3', 'password3'),
-('user4', 'password4'),
-('user5', 'password5');
+('user1', 'hash1', 'salt1'),
+('user2', 'hash2', 'salt2'),
+('user3', 'hash3', 'salt3'),
+('user4', 'hash4', 'salt4'),
+('user5', 'hash5', 'salt5');
 
 
 
