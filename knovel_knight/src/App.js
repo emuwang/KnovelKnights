@@ -18,6 +18,7 @@ function App() {
           <Route path="/books" element={<Books />} />
           <Route path="/leaderboard" element={<Leaderboard />} />
           <Route path="/events" element={<Events />} /> 
+          <Route path='/register' element={<Register />} />
         </Routes>
         {/* <Register /> */}
       </div>
