@@ -30,7 +30,6 @@ app.get('/books', (req, res)=> {
 app.post('/userauth', (req, res) => {
     console.log("received user %s", req.body.user);
     const username = req.body.user;
-    // const searchsql = "SELECT * FROM knovel_knights.users WHERE `username` = 'ewang19';"
     var pswd;
     
     const searchsql = "SELECT * FROM users WHERE `username` = '" + username + "';"
@@ -57,7 +56,7 @@ app.post('/userauth', (req, res) => {
                     } else {
                         res.send("Incorrect password")
                     }
-
+                    
                 }
             });
         }
